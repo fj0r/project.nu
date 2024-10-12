@@ -11,7 +11,7 @@ const _enter = "
         if ('.env' | path exists) {
             open .env
             | lines
-            | parse -r '(?<k>.+?)=(?<v>.+)'
+            | parse -r '(?<k>.+?)\\s*=\\s*(?<v>.+)'
             | reduce -f {} {|x, acc| $acc | insert $x.k $x.v}
         } else {
             {}
