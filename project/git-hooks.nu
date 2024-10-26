@@ -93,6 +93,14 @@ export def git-hooks-context [] {
     }
 }
 
+def outdent [indent] {
+    $in
+    | lines
+    | range 1..
+    | str substring $indent..
+    | str join (char newline)
+}
+
 export def git-install-hooks [
     ...hooks:string@cmpl-hooks
     --mod(-m)="__"
@@ -122,10 +130,7 @@ export def git-install-hooks [
             }
         }
         "
-        | lines
-        | range 1..<-1
-        | str substring 8..
-        | str join (char newline)
+        | outdent 8
         | save -f $p
         chmod +x $p
     }
